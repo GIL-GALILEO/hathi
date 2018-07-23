@@ -59,8 +59,10 @@ reader.each_raw do |raw|
 
     #for mmsid
     row['mmsid'] = record['001'].value
+    
 
     #For oclc numbers
+    row['oclc'] = ""
     multioclc = false  #used if there are multiple oclc numbers
     record.each_by_tag("035") do |field|
       if field.is_a?(MARC::DataField)
