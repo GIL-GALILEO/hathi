@@ -1,0 +1,98 @@
+rule "keep 001, 035 with OCLC prefix, 074, 086, 977"
+when
+(TRUE)
+then
+removeControlField "LDR"
+removeField "002"
+removeControlField "003"
+removeField "004"
+removeControlField "005"
+removeControlField "006"
+removeControlField "007"
+removeControlField "008"
+removeField "009"
+removeField "01*"
+removeField "02*"
+removeField "030"
+removeField "031"
+removeField "032"
+removeField "033"
+removeField "034"
+removeField "035" if (not exists "035.a.(OCoLC)*|ocl7*|ocm*|ocn*|on*")
+removeSubField "035.z"
+removeField "036"
+removeField "037"
+removeField "038"
+removeField "039"
+removeField "04*"
+removeField "05*"
+removeField "06*"
+removeField "070"
+removeField "071"
+removeField "072"
+removeField "073"
+removeField "075"
+removeField "076"
+removeField "077"
+removeField "078"
+removeField "079"
+removeField "080"
+removeField "081"
+removeField "082"
+removeField "083"
+removeField "084"
+removeField "085"
+removeField "087"
+removeField "088"
+removeField "089"
+removeField "09*"
+removeField "1*"
+removeField "2*"
+removeField "3*"
+removeField "4*"
+removeField "5*"
+removeField "6*"
+removeField "7*"
+removeField "8*"
+removeField "90*"
+removeField "91*"
+removeField "92*"
+removeField "93*"
+removeField "94*"
+removeField "95*"
+removeField "96*"
+removeField "970"
+removeField "971"
+removeField "972"
+removeField "973"
+removeField "974"
+removeField "975"
+removeField "976"
+removeField "978"
+removeField "979"
+removeField "98*"
+removeField "99*"
+end
+
+rule "convert lost/missing to LM"
+when
+((exists "977.c.LOST") OR (exists "977.c.MISSING"))
+then
+replaceContents "977.c.*" with "LM"
+end
+
+rule "convert Wdn (withdrawn) shelving location to WD"
+when
+(TRUE)
+then
+replaceContents "977.d.Wdn*|WIT*|Withdrawn|withdrawn|WITHDRAWN|WD*|wd*|WTD*|MSWD*" with "WD" 
+end
+
+rule "convert brittle and damaged to BRT"
+when
+(exists "977.e.*Damage*") or (exists "977.f.*Damage*") or (exists "977.g.*")
+then
+replaceContents "977.e.*" with "BRT"
+
+end
+
