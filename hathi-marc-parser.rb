@@ -33,6 +33,10 @@ errfile = File.open(errfname, "w")
 #set up counts
 count = 1
 errcount = 0
+brtcount = 0
+govcount = 0
+wdcount = 0
+lmcount = 0
 
 #config progress bar
 progressbar = ProgressBar.create(:length => 40, :starting_at => 20, :total => nil)
@@ -85,23 +89,27 @@ reader.each_raw do |raw|
     row['gvt'] = "0"
     if record['074'] or record['086']
       row['gvt'] = "1"
+      govcount += 1
     end #if record
 
     #for CH, WD, or LM
     row['loc'] = ""
     if record['977']['d'].to_s.downcase.include? "wdn"
       row['loc'] = "WD"
+      wdcount += 1
     elsif record['977']['d']
       row['loc'] = "CH"
     end
     if record['977']['c'].to_s.downcase.include? "lm"
       row['loc'] = "LM"
+      lmcount += 1
     end
 
     #for britle
     row['condition'] = ""
-    if record['977']['b'].to_s.downcase.include? "brt"
+    if record['977']['e'].to_s.downcase.include? "brt"
       row['condition'] = "BRT"
+      brtcount += 1
     end
 
     #for Chronology (only for multi part monos)
@@ -121,7 +129,7 @@ reader.each_raw do |raw|
   count += 1
 end #reader loop
 
-progressbar.log "#{count-1} records processed, #{errcount} of which were corrupt. "
+progressbar.log "#{count-1} records processed, #{errcount} errors, #{brtcount} brittle or damaged, #{govcount} gov docs, #{wdcount} withdrawn, #{lmcount} lost or missing. "
 progressbar.finish
 
 writer.close
