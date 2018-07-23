@@ -94,7 +94,7 @@ reader.each_raw do |raw|
 
     #for CH, WD, or LM
     row['loc'] = ""
-    if record['977']['d'].to_s.downcase.include? "wdn"
+    if record['977']['d'].to_s.downcase.include? "wd"
       row['loc'] = "WD"
       wdcount += 1
     elsif record['977']['d']
