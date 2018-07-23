@@ -112,7 +112,7 @@ reader.each_raw do |raw|
       #write the row to the file
       writer.puts row['oclc'] + delim + row['mmsid'] + delim + row['loc'] + delim + row['condition'] + delim + row['chron'] +  delim + delim + row['gvt']
     rescue Exception => ex
-      progressbar.log "An error occured at record #{count}.  Error: #{ex.message}"
+      progressbar.log "An error occured at record #{count}, mmsid: #{row['mmsid']}.  Error: #{ex.message}"
     end
   end
   progressbar.increment if count % 1000 == 0
