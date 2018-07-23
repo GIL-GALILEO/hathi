@@ -1,3 +1,4 @@
+#!/apps/ruby/2.3.4/bin/ruby
 #!/usr/bin/ruby
 # processes records from the given file and outputs in Hathi format, like this:
 # OCLC number(s) [tab] MMSID [tab] CH or WD [tab] BRT [tab][tab] issn [tab] 0 or 1
@@ -103,8 +104,8 @@ reader.each_raw do |raw|
 
     #for Chronology (only for multi part monos)
     row['chron'] = ""
-    if record['977']['e']
-      row['chron'] = record['977']['e']
+    if record['977']['b']
+      row['chron'] = record['977']['b']
     end
 
     begin
