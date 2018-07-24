@@ -20,7 +20,8 @@ if ARGV.empty?
   exit
 end
 
-delim = " <TAB> "
+#delim = " <TAB> "
+delim = "\t"
 infile = ARGV[0]
 outfile = ARGV[1]
 
@@ -75,6 +76,7 @@ reader.each_raw do |raw|
           progressbar.log "subfield: #{subfield}"
         end
         if subfield
+          subfield.to_s.strip!
           if multioclc
             row['oclc'] = row['oclc'] + "," + subfield #will be here if more than one oclc number
           else
