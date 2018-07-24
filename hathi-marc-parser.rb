@@ -94,30 +94,34 @@ reader.each_raw do |raw|
       govcount += 1
     end #if record
 
-    #for CH, WD, or LM
     row['loc'] = ""
-    if record['977']['d'].to_s.downcase.include? "wd"
-      row['loc'] = "WD"
-      wdcount += 1
-    elsif record['977']['d']
-      row['loc'] = "CH"
-    end
-    if record['977']['c'].to_s.downcase.include? "lm"
-      row['loc'] = "LM"
-      lmcount += 1
-    end
-
-    #for britle
     row['condition'] = ""
-    if record['977']['e'].to_s.downcase.include? "brt"
-      row['condition'] = "BRT"
-      brtcount += 1
-    end
-
-    #for Chronology (only for multi part monos)
     row['chron'] = ""
-    if record['977']['b']
-      row['chron'] = record['977']['b']
+    
+    if record['977']
+      #for CH, WD, or LM
+      if record['977']['d'].to_s.downcase.include? "wd"
+       row['loc'] = "WD"
+        wdcount += 1
+      elsif record['977']['d']
+        row['loc'] = "CH"
+      end
+      if record['977']['c'].to_s.downcase.include? "lm"
+        row['loc'] = "LM"
+        lmcount += 1
+      end
+    
+
+      #for britle
+      if record['977']['e'].to_s.downcase.include? "brt"
+        row['condition'] = "BRT"
+        brtcount += 1
+      end
+
+      #for Chronology (only for multi part monos)
+      if record['977']['b']
+        row['chron'] = record['977']['b']
+      end
     end
 
     begin
